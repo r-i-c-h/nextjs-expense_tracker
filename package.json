@@ -11,6 +11,7 @@
     "prisma_migrate": "dotenv -e .env.local -- npx prisma migrate dev"
   },
   "dependencies": {
+    "@clerk/nextjs": "^5.3.1",
     "@prisma/client": "^5.18.0",
     "next": "14.2.4",
     "react": "^18",
