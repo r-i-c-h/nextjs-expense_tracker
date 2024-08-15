@@ -1,7 +1,7 @@
 const Hompage = () => {
   return (
     <main>
-      <h1>Expense Tracker</h1>
+      <h1>💰🤑 Tracker</h1>
     </main>
   );
 }

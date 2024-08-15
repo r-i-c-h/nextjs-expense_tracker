@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
-import { Roboto } from "next/font/google";
 import "./styles/globals.css";
-
+import { Roboto } from "next/font/google";
 const roboto = Roboto({ weight: "400", subsets: ["latin"] });
+
+import Header from "../components/Header";
 
 export const metadata: Metadata = {
   title: "Money Tracker",
@@ -18,7 +19,12 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={roboto.className}>{children}</body>
+        <body className={roboto.className}>
+          <Header />
+          <main className="container">
+            {children}
+          </main>
+        </body>
       </html>
     </ClerkProvider>
   );
