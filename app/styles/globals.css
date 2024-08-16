@@ -122,6 +122,24 @@ label {
   margin: 10px 0;
 }
 
+label[for="text"] {
+  margin-bottom: -10%;
+}
+
+label[for="amount"] span {
+  font-size: 60%;
+  display: block;
+  margin-bottom: -10%;
+}
+
+input#amount {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='16px' width='85px'><text x='2' y='13' fill='darkslategray' font-size='1em' >$</text></svg>");
+  background-repeat: no-repeat;
+  background-size: clip;
+  background-position: 1% 50%;
+  padding-left: 2ch;
+}
+
 input[type='text'],
 input[type='number'] {
   border: 1px solid #dedede;
