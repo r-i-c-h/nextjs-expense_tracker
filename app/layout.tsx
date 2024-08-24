@@ -1,10 +1,15 @@
 import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
-import "./styles/globals.css";
 import { Roboto } from "next/font/google";
 const roboto = Roboto({ weight: "400", subsets: ["latin"] });
+import "./styles/globals.css";
+
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 import Header from "../components/Header";
+
+
 
 export const metadata: Metadata = {
   title: "Money Tracker",
@@ -24,6 +29,7 @@ export default function RootLayout({
           <main className="container">
             {children}
           </main>
+          <ToastContainer closeOnClick theme="colored" position="top-center" />
         </body>
       </html>
     </ClerkProvider>
