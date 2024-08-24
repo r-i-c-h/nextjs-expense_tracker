@@ -1,8 +1,10 @@
 "use client"
-import addTransaction from "@/app/actions/addTransaction"
+import addTransaction from "@/app/actions/addTransaction" // db functions
+import { useRef } from "react"; // for Form clearing
 import { toast } from 'react-toastify';
 
 const AddTransaction = () => {
+  const formRef = useRef<HTMLFormElement>(null);
   const clientAction = async (formData: FormData) => {
     const { data, error } = await addTransaction(formData);
 
@@ -10,14 +12,15 @@ const AddTransaction = () => {
       console.error(error)
       toast.error(error)
     } else {
-      toast.success(`AOK: ${data?.text} @ ${data?.amount}`);
-      console.log('data>> ', data);
+      // console.log('data>> ', data);
+      toast.success(`✅ ${data?.text} @ $${data?.amount}`);
+      formRef.current?.reset(); // clear form
     }
   }
 
   return (<>
     <h3>Transactions</h3>
-    <form action={clientAction}>
+    <form action={clientAction} ref={formRef} >
       <fieldset role="group" aria-labelledby="fieldLegend">
         <legend id="fieldLegend">Add Transaction</legend>
         <div className="form-control">

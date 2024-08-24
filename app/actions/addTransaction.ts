@@ -1,5 +1,7 @@
 'use server';
 import { auth } from '@clerk/nextjs/server';
+import { db } from '@/lib/db';
+import { revalidatePath } from 'next/cache';
 
 interface TransactionData {
   text: string;
@@ -16,7 +18,7 @@ async function addTransaction(formData: FormData): Promise<TransactionResult> {
   const textValue = formData.get('text');
   const amountValue = formData.get('amount');
 
-  // Validate Submission Data
+  // Validate Form Submission Data
   if (!textValue || textValue === '' || !amountValue || amountValue === '') {
     return { error: 'Invalid Form Input. Please try again.' };
   }
@@ -27,12 +29,23 @@ async function addTransaction(formData: FormData): Promise<TransactionResult> {
     return { error: 'No User Found' };
   }
 
-  // Setup TransactionData
-  const text: string = textValue.toString();
-  const amount: number = parseFloat(amountValue.toString());
-  const transactionData: TransactionData = { text, amount };
+  try {
+    // Setup TransactionData
+    const text: string = textValue.toString();
+    const amount: number = parseFloat(amountValue.toString());
 
-  return { data: transactionData };
+    const submissionData = { text, amount, userId };
+    const transactionData: TransactionData = await db.transaction.create({
+      data: submissionData
+    });
+
+    revalidatePath('/'); // Force Page Refresh
+
+    return { data: transactionData };
+  } catch (err) {
+    console.error('Problem when sending submissionData');
+    return { error: 'Transaction not verified.' };
+  }
 }
 
 export default addTransaction;
