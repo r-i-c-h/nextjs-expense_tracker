@@ -15,11 +15,13 @@ interface TransactionResult {
 
 async function addTransaction(formData: FormData): Promise<TransactionResult> {
   // Form Values:
-  const textValue = formData.get('text');
-  const amountValue = formData.get('amount');
+  const textVal = formData.get('text') as string;
+  const amountVal = formData.get('amount') as string;
 
   // Validate Form Submission Data
-  if (!textValue || textValue === '' || !amountValue || amountValue === '') {
+  let isAmountZero = parseFloat(amountVal) == 0 || amountVal.length == 0;
+
+  if (!textVal || textVal.trim().length == 0 || !amountVal || isAmountZero) {
     return { error: 'Invalid Form Input.\nPlease try again.' };
   }
 
@@ -31,8 +33,8 @@ async function addTransaction(formData: FormData): Promise<TransactionResult> {
 
   try {
     // Setup TransactionData
-    const text: string = textValue.toString();
-    const amount: number = parseFloat(amountValue.toString());
+    const text: string = textVal.toString();
+    const amount: number = parseFloat(amountVal.toString());
 
     const submissionData = { text, amount, userId };
     const transactionData: TransactionData = await db.transaction.create({
