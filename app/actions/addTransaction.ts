@@ -20,7 +20,7 @@ async function addTransaction(formData: FormData): Promise<TransactionResult> {
 
   // Validate Form Submission Data
   if (!textValue || textValue === '' || !amountValue || amountValue === '') {
-    return { error: 'Invalid Form Input. Please try again.' };
+    return { error: 'Invalid Form Input.\nPlease try again.' };
   }
 
   // Validate User

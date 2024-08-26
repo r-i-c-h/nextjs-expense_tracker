@@ -1,5 +1,6 @@
 "use client"
 import addTransaction from "@/app/actions/addTransaction" // db functions
+import { formatNumToDecimalString } from "@/lib/utils";
 import { useRef } from "react"; // for Form clearing
 import { toast } from 'react-toastify';
 
@@ -10,11 +11,24 @@ const AddTransaction = () => {
 
     if (error) {
       console.error(error)
-      toast.error(error)
+      let msg = error.toString();
+
+      toast.error(() => <span style={{ whiteSpace: "pre-wrap" }}>{msg}</span>);
     } else {
-      // console.log('data>> ', data);
-      toast.success(`✅ ${data?.text} @ $${data?.amount}`);
-      formRef.current?.reset(); // clear form
+
+      formRef.current?.reset(); // clear <form>
+
+      // Change Toast Message based on ± Transaction
+      let toastMessage = ''
+      let baseString = `${data?.text} for ` // // `🆗 ${data?.text} @	➖$(${data?.amount})`
+      const num = data?.amount ?? 0;
+      const prettyNum = formatNumToDecimalString(num)
+      if (num < 0) {
+        toastMessage = `➖🙁💸  ${baseString}$(${prettyNum})`; //
+      } else {
+        toastMessage = `👍💰➕: ${baseString}$${prettyNum}`; // // 🤑💰
+      }
+      toast.success(toastMessage); // <~~ GREEN
     }
   }
 
