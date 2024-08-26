@@ -33,10 +33,10 @@ const AddTransaction = () => {
   }
 
   return (<>
-    <h3>Transactions</h3>
+    {/* <h3>Transactions</h3>  */}
     <form action={clientAction} ref={formRef} >
       <fieldset role="group" aria-labelledby="fieldLegend">
-        <legend id="fieldLegend">Add Transaction</legend>
+        <legend id="fieldLegend">Create New Transaction</legend>
         <div className="form-control">
           <label htmlFor="text">Description:</label>
           <input type="text" name="text" id="text" placeholder="Transaction Description..." />
