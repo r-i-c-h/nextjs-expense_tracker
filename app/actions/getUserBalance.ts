@@ -9,12 +9,12 @@ interface BalanceResponse {
 }
 
 async function getUserBalance(): Promise<BalanceResponse> {
-  const { userId } = auth();
-  if (!userId) {
-    return { error: 'No User Found' };
-  }
-
   try {
+    const { userId } = auth();
+    if (!userId) {
+      return { error: 'No User Found' };
+    }
+
     const transactions = await db.transaction.findMany({
       where: { userId }
     });
