@@ -3,6 +3,7 @@ import Guest from '../components/Guest';
 import AddTransaction from '@/components/AddTransaction';
 import Balance from '@/components/Balance';
 import IncomeExpense from '@/components/IncomeExpense';
+import TransactionList from '@/components/TransactionList';
 
 const Hompage = async () => {
 
@@ -16,6 +17,7 @@ const Hompage = async () => {
       <Balance />
       <IncomeExpense />
       <AddTransaction />
+      <TransactionList />
     </main>
   );
 }
